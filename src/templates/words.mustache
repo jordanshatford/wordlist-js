@@ -1,0 +1,12 @@
+{{ #frequencies }}
+export const {{ name }} = [
+  {{ #words }}
+  "{{{ . }}}",
+  {{ /words }}
+]
+{{ /frequencies }}
+export default {
+{{ #frequencies }}
+  {{ name }},
+{{ /frequencies }}
+}

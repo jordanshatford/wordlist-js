@@ -1,0 +1,62 @@
+{
+  "name": "wordlistjs",
+  "version": "0.0.1",
+  "description": "A package to provide common English words from various nationalities.",
+  "main": "./dist/index.js",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "pnpm clean && pnpm generate && tsc",
+    "lint": "eslint ./src/",
+    "lint:fix": "eslint ./src/ --fix",
+    "typecheck": "tsc --noEmit",
+    "generate": "ts-node src/generator.ts -s src/assets/scowl-2020.12.07/final/ -o src/generated/ -n english american australian british canadian british_z -f 10 20 35 40 50 55 60 70 80 95",
+    "clean": "rm -rf dist/ && rm -rf src/generated/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordanshatford/wordlistjs.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jordan Shatford",
+    "url": "https://github.com/jordanshatford"
+  },
+  "keywords": [
+    "typescript",
+    "words",
+    "english",
+    "american",
+    "australian",
+    "british",
+    "britishZ",
+    "canadian"
+  ],
+  "bugs": {
+    "url": "https://github.com/jordanshatford/wordlistjs/issues"
+  },
+  "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
+    "@types/mustache": "^4.1.2",
+    "@types/node": "^17.0.18",
+    "@types/yargs": "^17.0.8",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "eslint": "^8.9.0",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "mustache": "^4.2.0",
+    "prettier": "^2.5.1",
+    "semantic-release": "^19.0.2",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5",
+    "yargs": "^17.3.1"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  }
+}
