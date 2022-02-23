@@ -3,15 +3,17 @@
   "version": "1.0.4",
   "description": "A package to provide common English words from various nationalities.",
   "main": "./dist/index.js",
+  "types": "./lib/index.d.ts",
   "files": [
     "dist/**/*"
   ],
   "scripts": {
-    "build": "pnpm clean && pnpm generate && tsc",
+    "build": "pnpm clean && pnpm generate && tsc && pnpm uglify:dist",
+    "uglify:dist": "uglifyjs-folder dist -e -x .js -o dist",
     "lint": "eslint ./src/",
     "lint:fix": "eslint ./src/ --fix",
     "typecheck": "tsc --noEmit",
-    "generate": "ts-node src/generator.ts -s src/assets/scowl-2020.12.07/final/ -o src/generated/ -n english american australian british canadian british_z -f 10 20 35 40 50 55 60 70 80 95",
+    "generate": "ts-node src/generator.ts -s src/assets/scowl-2020.12.07/final/ -o src/generated/ -n english american australian british canadian british_z -f 10 20 35 40 50 55 60 70",
     "clean": "rm -rf dist/ && rm -rf src/generated/"
   },
   "repository": {
@@ -39,6 +41,7 @@
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^9.0.2",
     "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.2",
     "@semantic-release/npm": "^9.0.0",
     "@types/mustache": "^4.1.2",
     "@types/node": "^17.0.18",
@@ -54,9 +57,7 @@
     "semantic-release": "^19.0.2",
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5",
+    "uglifyjs-folder": "^3.0.0",
     "yargs": "^17.3.1"
-  },
-  "dependencies": {
-    "@semantic-release/github": "^8.0.2"
   }
 }
