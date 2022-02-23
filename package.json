@@ -1,6 +1,6 @@
 {
   "name": "wordlistjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A package to provide common English words from various nationalities.",
   "main": "./dist/index.js",
   "files": [
