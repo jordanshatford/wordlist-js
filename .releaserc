@@ -1,9 +1,0 @@
-{
-  "branches": ["main", "next"],
-  "plugins": [
-    ["@semantic-release/git", {
-      "assets": ["package.json"],
-      "message": "chore(release): Update version info ${nextRelease.version} [skip ci]"
-    }]
-  ]
-}
