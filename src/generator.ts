@@ -6,7 +6,7 @@ import { processWordsFileContent, snakeToCamel } from './utils';
 interface IGenerateOptions {
   sourceDir: string;
   outputDir: string;
-  nationalities: string[];
+  dialects: string[];
   frequencies: string[];
 }
 
@@ -15,7 +15,7 @@ const wordsTemplate = fs.readFileSync(path.join(templatePath, 'words.mustache'),
 const indexTemplate = fs.readFileSync(path.join(templatePath, 'index.mustache'), 'utf-8');
 
 export function generate(options: IGenerateOptions) {
-  const { sourceDir, outputDir, nationalities, frequencies } = options;
+  const { sourceDir, outputDir, dialects, frequencies } = options;
   const outputDirPath = path.join(__dirname, '..', outputDir);
   const sourceDirPath = path.join(__dirname, '..', sourceDir);
 
@@ -23,23 +23,23 @@ export function generate(options: IGenerateOptions) {
     if (err) throw err;
   });
 
-  nationalities.forEach((nationality) => {
+  dialects.forEach((dialect) => {
     const categories: any[] = [];
     frequencies.forEach((frequency) => {
-      const scowlFileName = `${nationality}-words.${frequency}`;
+      const scowlFileName = `${dialect}-words.${frequency}`;
       const scowlFileContent = fs.readFileSync(path.join(sourceDirPath, scowlFileName), 'latin1');
       categories.push({
-        name: `${snakeToCamel(nationality)}${frequency}`,
+        name: `${snakeToCamel(dialect)}${frequency}`,
         words: processWordsFileContent(scowlFileContent),
       });
     });
     const result = Mustache.render(wordsTemplate, { frequencies: categories });
-    const fileName = `${snakeToCamel(nationality)}.ts`;
+    const fileName = `${snakeToCamel(dialect)}.ts`;
     fs.writeFileSync(path.join(outputDirPath, fileName), result);
   });
 
   // Generate index.ts file linking all subfiles
-  const files = nationalities.map((value) => snakeToCamel(value));
+  const files = dialects.map((value) => snakeToCamel(value));
   const indexContent = Mustache.render(indexTemplate, { files: files });
   fs.writeFileSync(path.join(outputDirPath, 'index.ts'), indexContent);
 }
