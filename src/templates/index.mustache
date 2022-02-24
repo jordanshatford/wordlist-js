@@ -1,11 +1,7 @@
 {{ #files }}
-import {{{ . }}} from "./{{{ . }}}"
+import * as {{{ . }}} from "./{{{ . }}}"
+export * from "./{{{ . }}}"
 {{ /files }}
-export {
-{{ #files }}
-  {{{ . }}},
-{{ /files }}
-}
 export default {
 {{ #files }}
   ...{{{ . }}},
