@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jordanshatford/wordlist-js.git"
+    "url": "https://github.com/jordanshatford/wordlist-js.git"
   },
   "license": "MIT",
   "author": {
