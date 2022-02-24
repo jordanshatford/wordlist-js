@@ -5,6 +5,11 @@ export const {{ name }} = [
   {{ /words }}
 ]
 {{ /frequencies }}
+export const {{ dialect }}All = [
+{{ #frequencies }}
+  ...{{ name }},
+{{ /frequencies }}
+]
 export default {
 {{ #frequencies }}
   {{ name }},
