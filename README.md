@@ -14,30 +14,30 @@ wordlistjs provides lists of English words based on how common they are used. It
 ### English
 ---
 ```sh
-english10, english20, english35, english40, english50, english55, english60, english70
+english10, english20, english35, english40, english50, english55, english60
 ```
 ### American
 ---
 ```sh
-american10, american20, american35, american40, american50, american55, american60, american70
+american10, american20, american35, american40, american50, american55, american60
 ```
 ### Australian
 ---
 ```sh
-australian10, australian20, australian35, australian40, australian50, australian55, australian60, australian70
+australian10, australian20, australian35, australian40, australian50, australian55, australian60
 ```
 ### British and BritishZ
 ---
 ```sh
 # British
-british10, british20, british35, british40, british50, british55, british60, british70
+british10, british20, british35, british40, british50, british55, british60
 # BritishZ
-britishZ10, britishZ20, britishZ35, britishZ40, britishZ50, britishZ55, britishZ60, britishZ70
+britishZ10, britishZ20, britishZ35, britishZ40, britishZ50, britishZ55, britishZ60
 ```
 ### Canadian
 ---
 ```sh
-canadian10, canadian20, canadian35, canadian40, canadian50, canadian55, canadian60, canadian70
+canadian10, canadian20, canadian35, canadian40, canadian50, canadian55, canadian60
 ```
 
 ## More Information
