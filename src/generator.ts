@@ -15,10 +15,10 @@ const wordsTemplate = fs.readFileSync(path.join(templatePath, 'words.mustache'),
 const indexTemplate = fs.readFileSync(path.join(templatePath, 'index.mustache'), 'utf-8');
 
 export function generate(options: IGenerateOptions) {
-  process.stdout.write("Generating words with options:\n")
-  process.stdout.write("--------------------------------------------------\n")
-  process.stdout.write(`${JSON.stringify(options, null, 2)}\n`)
-  process.stdout.write("--------------------------------------------------\n")
+  process.stdout.write('Generating words with options:\n');
+  process.stdout.write('--------------------------------------------------\n');
+  process.stdout.write(`${JSON.stringify(options, null, 2)}\n`);
+  process.stdout.write('--------------------------------------------------\n');
   const { sourceDir, outputDir, dialects, frequencies } = options;
   const outputDirPath = path.join(__dirname, '..', outputDir);
   const sourceDirPath = path.join(__dirname, '..', sourceDir);
@@ -27,12 +27,12 @@ export function generate(options: IGenerateOptions) {
     if (err) throw err;
   });
 
-  process.stdout.write("Generating each dialects words...\n")
+  process.stdout.write('Generating each dialects words...\n');
   dialects.forEach((dialect) => {
-    process.stdout.write(`  ${dialect}... `)
+    process.stdout.write(`  ${dialect}... `);
     const dialectFrequencies: Array<{ name: string; words: string[] }> = [];
     frequencies.forEach((frequency) => {
-      process.stdout.write(` ${frequency}..`)
+      process.stdout.write(` ${frequency}..`);
       const scowlFileName = `${dialect}-words.${frequency}`;
       const scowlFileContent = fs.readFileSync(path.join(sourceDirPath, scowlFileName), 'latin1');
       dialectFrequencies.push({
@@ -40,7 +40,7 @@ export function generate(options: IGenerateOptions) {
         words: processWordsFileContent(scowlFileContent),
       });
     });
-    process.stdout.write(" \u2713\n")
+    process.stdout.write(' \u2713\n');
     const result = Mustache.render(wordsTemplate, {
       frequencies: dialectFrequencies,
       dialect: snakeToCamel(dialect),
@@ -48,11 +48,11 @@ export function generate(options: IGenerateOptions) {
     const fileName = `${snakeToCamel(dialect)}.ts`;
     fs.writeFileSync(path.join(outputDirPath, fileName), result);
   });
-  process.stdout.write("Generating dialects complete.\n")
-  process.stdout.write("Generating index file...\n")
+  process.stdout.write('Generating dialects complete.\n');
+  process.stdout.write('Generating index file...\n');
   // Generate index.ts file linking all subfiles
   const files = dialects.map((value) => snakeToCamel(value));
   const indexContent = Mustache.render(indexTemplate, { files: files });
   fs.writeFileSync(path.join(outputDirPath, 'index.ts'), indexContent);
-  process.stdout.write("Generating complete.\n")
+  process.stdout.write('Generating complete.\n');
 }
