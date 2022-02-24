@@ -8,6 +8,6 @@ export function processWordsFileContent(content: string) {
   const splitWordsList = content.trim().split('\r\n');
   const wordsWithoutPossesives = splitWordsList.filter((word) => {
     return !/'s$/.test(word);
-  })
+  });
   return wordsWithoutPossesives.sort();
 }

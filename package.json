@@ -8,11 +8,11 @@
   ],
   "scripts": {
     "build": "pnpm clean && pnpm generate && tsc && pnpm uglify:dist",
-    "uglify:dist": "uglifyjs-folder dist -e -x .js -o dist",
+    "uglify:dist": "uglifyjs-folder dist -e -x .js -o dist --log-level error",
     "lint": "eslint ./src/",
     "lint:fix": "eslint ./src/ --fix",
     "typecheck": "tsc --noEmit",
-    "generate": "ts-node src/generator.ts -s src/assets/scowl-2020.12.07/final/ -o src/generated/ -n english american australian british canadian british_z -f 10 20 35 40 50 55 60 70",
+    "generate": "ts-node src/cli.ts -s src/assets/scowl-2020.12.07/final/ -o src/generated/ -n english american australian british canadian british_z -f 10 20 35 40 50 55 60 70",
     "clean": "rm -rf dist/ && rm -rf src/generated/"
   },
   "repository": {
