@@ -1,6 +1,6 @@
 {
-  "name": "wordlistjs",
-  "version": "2.0.1",
+  "name": "wordlist-js",
+  "version": "1.0.0",
   "description": "A package to provide common English words from various nationalities.",
   "main": "./dist/index.js",
   "files": [
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jordanshatford/wordlistjs.git"
+    "url": "git+https://github.com/jordanshatford/wordlist-js.git"
   },
   "license": "MIT",
   "author": {
@@ -32,10 +32,15 @@
     "australian",
     "british",
     "britishZ",
-    "canadian"
+    "canadian",
+    "words",
+    "wordslist",
+    "wordlist",
+    "scrabble",
+    "wordle"
   ],
   "bugs": {
-    "url": "https://github.com/jordanshatford/wordlistjs/issues"
+    "url": "https://github.com/jordanshatford/wordlist-js/issues"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^9.0.2",
