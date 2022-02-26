@@ -10,9 +10,11 @@ interface IGenerateOptions {
   frequencies: string[];
 }
 
-const templatePath = path.join(__dirname, '..', 'src', 'templates');
+const projectDir = path.join(__dirname, '..');
+const templatePath = path.join(projectDir, 'src', 'templates');
 const wordsTemplate = fs.readFileSync(path.join(templatePath, 'words.mustache'), 'utf-8');
 const indexTemplate = fs.readFileSync(path.join(templatePath, 'index.mustache'), 'utf-8');
+const readmeTemplate = fs.readFileSync(path.join(templatePath, 'readme.mustache'), 'utf-8');
 
 export function generate(options: IGenerateOptions) {
   process.stdout.write('Generating words with options:\n');
@@ -20,8 +22,8 @@ export function generate(options: IGenerateOptions) {
   process.stdout.write(`${JSON.stringify(options, null, 2)}\n`);
   process.stdout.write('--------------------------------------------------\n');
   const { sourceDir, outputDir, dialects, frequencies } = options;
-  const outputDirPath = path.join(__dirname, '..', outputDir);
-  const sourceDirPath = path.join(__dirname, '..', sourceDir);
+  const outputDirPath = path.join(projectDir, outputDir);
+  const sourceDirPath = path.join(projectDir, sourceDir);
 
   fs.mkdir(outputDirPath, { recursive: true }, (err) => {
     if (err) throw err;
@@ -54,5 +56,12 @@ export function generate(options: IGenerateOptions) {
   const files = dialects.map((value) => snakeToCamel(value));
   const indexContent = Mustache.render(indexTemplate, { files: files });
   fs.writeFileSync(path.join(outputDirPath, 'index.ts'), indexContent);
+  process.stdout.write('Generating README file...\n');
+  // Generate README.md with list of wordslists
+  const readmeData = dialects.map((dialect) => {
+    return { name: snakeToCamel(dialect), frequencies };
+  });
+  const readmeContent = Mustache.render(readmeTemplate, { dialects: readmeData });
+  fs.writeFileSync(path.join(projectDir, 'README.md'), readmeContent);
   process.stdout.write('Generating complete.\n');
 }
