@@ -4,7 +4,7 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/npm",
     ["@semantic-release/git", {
-      "assets": ["package.json", "dist"]
+      "assets": ["package.json", "README.md", "dist"]
     }],
     "@semantic-release/github"
   ]
