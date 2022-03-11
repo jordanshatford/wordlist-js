@@ -5,11 +5,13 @@ specifiers:
   '@semantic-release/git': ^10.0.1
   '@semantic-release/github': ^8.0.2
   '@semantic-release/npm': ^9.0.0
+  '@types/bad-words': ^3.0.1
   '@types/mustache': ^4.1.2
   '@types/node': ^17.0.18
   '@types/yargs': ^17.0.8
   '@typescript-eslint/eslint-plugin': ^5.12.1
   '@typescript-eslint/parser': ^5.12.1
+  bad-words: ^3.0.4
   eslint: ^8.9.0
   eslint-config-prettier: ^8.4.0
   eslint-plugin-node: ^11.1.0
@@ -27,11 +29,13 @@ devDependencies:
   '@semantic-release/git': 10.0.1_semantic-release@19.0.2
   '@semantic-release/github': 8.0.2_semantic-release@19.0.2
   '@semantic-release/npm': 9.0.0_semantic-release@19.0.2
+  '@types/bad-words': 3.0.1
   '@types/mustache': 4.1.2
   '@types/node': 17.0.18
   '@types/yargs': 17.0.8
   '@typescript-eslint/eslint-plugin': 5.12.1_aa3af6382115a42a71cc388b7b2c30b3
   '@typescript-eslint/parser': 5.12.1_eslint@8.9.0+typescript@4.5.5
+  bad-words: 3.0.4
   eslint: 8.9.0
   eslint-config-prettier: 8.4.0_eslint@8.9.0
   eslint-plugin-node: 11.1.0_eslint@8.9.0
@@ -377,6 +381,10 @@ packages:
     resolution: {integrity: sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==}
     dev: true
 
+  /@types/bad-words/3.0.1:
+    resolution: {integrity: sha512-7la3ZDJG1tlRqySO+pnXycZpacaMEw/iLEm8kc4l+I+jN8KjBfoQVwO6jm98xzXVLrxV8vDrB5TaMoop8sKclQ==}
+    dev: true
+
   /@types/json-schema/7.0.9:
     resolution: {integrity: sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==}
     dev: true
@@ -653,6 +661,17 @@ packages:
   /arrify/2.0.1:
     resolution: {integrity: sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==}
     engines: {node: '>=8'}
+    dev: true
+
+  /bad-words/3.0.4:
+    resolution: {integrity: sha512-v/Q9uRPH4+yzDVLL4vR1+S9KoFgOEUl5s4axd6NIAq8SV2mradgi4E8lma/Y0cw1ltVdvyegCQQKffCPRCp8fg==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      badwords-list: 1.0.0
+    dev: true
+
+  /badwords-list/1.0.0:
+    resolution: {integrity: sha1-XphW2/E0gqKVw7CzBK+51M/FxXk=}
     dev: true
 
   /balanced-match/1.0.2:
