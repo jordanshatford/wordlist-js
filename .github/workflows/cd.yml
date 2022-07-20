@@ -1,31 +1,23 @@
-name: Release Package
+name: CD
 on:
   push:
     branches:
       - main
-      - next
 
 jobs:
-  release:
+  cd:
+    name: Deploy to npmjs.com
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.31.0
+      - uses: actions/checkout@v3
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.4.1
         with:
           node-version: lts/*
-          cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
       - name: Build
-        run: pnpm build
+        run: npm run build
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

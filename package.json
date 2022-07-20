@@ -7,7 +7,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "pnpm clean && pnpm generate && tsc && pnpm uglify:dist",
+    "build": "npm run clean && npm run generate && tsc && npm run uglify:dist",
     "uglify:dist": "uglifyjs-folder dist -e -x .js -o dist --log-level error",
     "lint": "eslint ./src/",
     "lint:fix": "eslint ./src/ --fix",
