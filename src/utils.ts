@@ -1,4 +1,4 @@
-import Filter from "bad-words"
+import Filter from 'bad-words';
 
 export function snakeToCamel(str: string): string {
   return str
@@ -7,14 +7,14 @@ export function snakeToCamel(str: string): string {
 }
 
 export function filterBadWords(words: string[]) {
-  const badWordPlaceHolderLetter = "*"
-  const filter = new Filter({ placeHolder: badWordPlaceHolderLetter })
-  const filteredWords = words.filter(w => {
-    const cleaned = filter.clean(w)
-    const bad = cleaned.split("").every(l => l === badWordPlaceHolderLetter)
-    return !bad
-  })
-  return filteredWords
+  const badWordPlaceHolderLetter = '*';
+  const filter = new Filter({ placeHolder: badWordPlaceHolderLetter });
+  const filteredWords = words.filter((w) => {
+    const cleaned = filter.clean(w);
+    const bad = cleaned.split('').every((l) => l === badWordPlaceHolderLetter);
+    return !bad;
+  });
+  return filteredWords;
 }
 
 export function processWordsFileContent(content: string) {
@@ -23,6 +23,6 @@ export function processWordsFileContent(content: string) {
     return !/'s$/.test(word);
   });
   const sortedFileWords = wordsWithoutPossesives.sort();
-  const filteredWords = filterBadWords(sortedFileWords)
-  return filteredWords
+  const filteredWords = filterBadWords(sortedFileWords);
+  return filteredWords;
 }
