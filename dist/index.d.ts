@@ -1,9 +1,9 @@
-export * from "./english";
-export * from "./american";
-export * from "./australian";
-export * from "./british";
-export * from "./canadian";
-export * from "./britishZ";
+export * as english from "./english";
+export * as american from "./american";
+export * as australian from "./australian";
+export * as british from "./british";
+export * as canadian from "./canadian";
+export * as britishZ from "./britishZ";
 declare const _default: {
     britishZ10: string[];
     britishZ20: string[];
@@ -13,15 +13,6 @@ declare const _default: {
     britishZ55: string[];
     britishZ60: string[];
     britishZAll: string[];
-    default: {
-        britishZ10: string[];
-        britishZ20: string[];
-        britishZ35: string[];
-        britishZ40: string[];
-        britishZ50: string[];
-        britishZ55: string[];
-        britishZ60: string[];
-    };
     canadian10: string[];
     canadian20: string[];
     canadian35: string[];

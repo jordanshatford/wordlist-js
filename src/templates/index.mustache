@@ -1,6 +1,6 @@
 {{ #files }}
 import * as {{{ . }}} from "./{{{ . }}}"
-export * from "./{{{ . }}}"
+export * as {{{ . }}} from "./{{{ . }}}"
 {{ /files }}
 export default {
 {{ #files }}
