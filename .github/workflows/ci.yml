@@ -9,17 +9,22 @@ on:
 
 jobs:
   ci:
-    name: Build
+    name: CI (Lint, Build)
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 21.x]
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: lts/*
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
       - name: Lint
-        run: npm run lint
+        run: pnpm lint
       - name: Build
-        run: npm run build
+        run: pnpm build
