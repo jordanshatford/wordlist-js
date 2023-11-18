@@ -65,5 +65,10 @@
     "typescript": "^5.2.2",
     "uglifyjs-folder": "^3.3.0",
     "yargs": "^17.7.2"
+  },
+  "packageManager": "pnpm@8.10.5+sha256.a4bd9bb7b48214bbfcd95f264bd75bb70d100e5d4b58808f5cd6ab40c6ac21c5",
+  "engines": {
+    "pnpm": ">=8",
+    "node": ">=18"
   }
 }
