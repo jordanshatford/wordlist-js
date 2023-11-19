@@ -1,0 +1,17 @@
+name: Word Filter Request
+description: Suggest a word to be filtered for the project.
+labels: ["enhancement"]
+assignees:
+  - jordanshatford
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to request a new word filter! Please ensure your request has enough information.
+  - type: textarea
+    id: word
+    attributes:
+      label: Word
+      description: The word you want to be filtered out.
+    validations:
+      required: true

@@ -1,0 +1,31 @@
+name: Word Request
+description: Suggest a new word for the project.
+labels: ["enhancement"]
+assignees:
+  - jordanshatford
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to request a new word! Please ensure your request has enough information.
+  - type: textarea
+    id: word
+    attributes:
+      label: Word
+      description: The word you want to add.
+    validations:
+      required: true
+  - type: textarea
+    id: dialect
+    attributes:
+      label: Dialect
+      description: The dialect to add the word to.
+    validations:
+      required: true
+  - type: textarea
+    id: frequency
+    attributes:
+      label: Frequency
+      description: The frequency of the word (10, 20, 35, 40, 50, 55, 60, 70, 80, 95).
+    validations:
+      required: true
