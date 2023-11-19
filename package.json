@@ -7,14 +7,15 @@
     "dist/**/*"
   ],
   "scripts": {
+    "prepare": "husky install",
+    "changeset": "changeset",
     "build": "npm run clean && npm run generate && tsc && npm run uglify:dist",
     "uglify:dist": "uglifyjs-folder dist -e -x .js -o dist --log-level error",
     "lint": "eslint ./src/",
     "lint:fix": "eslint ./src/ --fix",
     "typecheck": "tsc --noEmit",
     "generate": "ts-node src/cli.ts -s src/assets/scowl-2020.12.07/final/ -o src/generated/",
-    "clean": "rm -rf dist/ && rm -rf src/generated/",
-    "changeset": "changeset"
+    "clean": "rm -rf dist/ && rm -rf src/generated/"
   },
   "repository": {
     "type": "git",
@@ -57,6 +58,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "husky": "^8.0.3",
     "mustache": "^4.2.0",
     "prettier": "^3.1.0",
     "ts-node": "^10.9.1",
