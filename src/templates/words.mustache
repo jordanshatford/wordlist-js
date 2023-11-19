@@ -7,6 +7,8 @@ export const {{ name }} = [
 {{ /frequencies }}
 export const {{ dialect }}All = [
 {{ #frequencies }}
+{{#isNotBad}}
   ...{{ name }},
+{{/isNotBad}}
 {{ /frequencies }}
 ]

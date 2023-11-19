@@ -32,15 +32,24 @@ export function generate(options: IGenerateOptions) {
   process.stdout.write('Generating each dialects words...\n');
   dialects.forEach((dialect) => {
     process.stdout.write(`  ${dialect}... `);
-    const dialectFrequencies: Array<{ name: string; words: string[] }> = [];
+    const dialectFrequencies: Array<{ name: string; words: string[]; isNotBad: boolean }> = [];
     frequencies.forEach((frequency) => {
       process.stdout.write(` ${frequency}..`);
       const scowlFileName = `${dialect}-words.${frequency}`;
       const scowlFileContent = fs.readFileSync(path.join(sourceDirPath, scowlFileName), 'latin1');
+      const [filteredWords, badwords] = processWordsFileContent(scowlFileContent);
       dialectFrequencies.push({
         name: `${snakeToCamel(dialect)}${frequency}`,
-        words: processWordsFileContent(scowlFileContent),
+        words: filteredWords,
+        isNotBad: true,
       });
+      if (badwords.length > 0) {
+        dialectFrequencies.push({
+          name: `${snakeToCamel(dialect)}Bad${frequency}`,
+          words: badwords,
+          isNotBad: false,
+        });
+      }
     });
     process.stdout.write(' \u2713\n');
     const result = Mustache.render(wordsTemplate, {

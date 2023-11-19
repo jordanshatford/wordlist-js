@@ -9,12 +9,16 @@ export function snakeToCamel(str: string): string {
 export function filterBadWords(words: string[]) {
   const badWordPlaceHolderLetter = '*';
   const filter = new Filter({ placeHolder: badWordPlaceHolderLetter });
+  const badwords: string[] = [];
   const filteredWords = words.filter((w) => {
     const cleaned = filter.clean(w);
     const bad = cleaned.split('').every((l) => l === badWordPlaceHolderLetter);
+    if (bad) {
+      badwords.push(w);
+    }
     return !bad;
   });
-  return filteredWords;
+  return [filteredWords, badwords];
 }
 
 export function processWordsFileContent(content: string) {
@@ -23,6 +27,6 @@ export function processWordsFileContent(content: string) {
     return !/'s$/.test(word);
   });
   const sortedFileWords = wordsWithoutPossesives.sort();
-  const filteredWords = filterBadWords(sortedFileWords);
-  return filteredWords;
+  const [filteredWords, badwords] = filterBadWords(sortedFileWords);
+  return [filteredWords, badwords];
 }

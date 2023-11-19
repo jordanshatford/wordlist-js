@@ -1,5 +1,6 @@
 export declare const britishZ10: string[];
 export declare const britishZ20: string[];
+export declare const britishZBad20: string[];
 export declare const britishZ35: string[];
 export declare const britishZ40: string[];
 export declare const britishZ50: string[];

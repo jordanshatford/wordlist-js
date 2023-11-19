@@ -1,8 +1,15 @@
 export declare const english10: string[];
+export declare const englishBad10: string[];
 export declare const english20: string[];
+export declare const englishBad20: string[];
 export declare const english35: string[];
+export declare const englishBad35: string[];
 export declare const english40: string[];
+export declare const englishBad40: string[];
 export declare const english50: string[];
+export declare const englishBad50: string[];
 export declare const english55: string[];
+export declare const englishBad55: string[];
 export declare const english60: string[];
+export declare const englishBad60: string[];
 export declare const englishAll: string[];
