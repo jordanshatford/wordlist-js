@@ -12,8 +12,8 @@
     "commitlint": "commitlint --edit",
     "build": "npm run clean && npm run generate && tsc && npm run uglify:dist",
     "uglify:dist": "uglifyjs-folder dist -e -x .js -o dist --log-level error",
-    "lint": "eslint ./src/",
-    "lint:fix": "eslint ./src/ --fix",
+    "lint": "prettier --check ./src/ && eslint ./src/",
+    "format": "prettier --write ./src/",
     "typecheck": "tsc --noEmit",
     "generate": "ts-node src/cli.ts -s src/assets/scowl-2020.12.07/final/ -o src/generated/",
     "clean": "rm -rf dist/ && rm -rf src/generated/"
