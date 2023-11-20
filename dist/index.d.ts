@@ -1,9 +1,9 @@
-export * as english from "./english";
-export * as american from "./american";
-export * as australian from "./australian";
-export * as british from "./british";
-export * as canadian from "./canadian";
-export * as britishZ from "./britishZ";
+export * from "./english";
+export * from "./american";
+export * from "./australian";
+export * from "./british";
+export * from "./canadian";
+export * from "./britishZ";
 declare const _default: {
     britishZ10: string[];
     britishZ20: string[];
