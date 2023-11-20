@@ -13,6 +13,7 @@ declare const _default: {
     britishZ50: string[];
     britishZ55: string[];
     britishZ60: string[];
+    britishZBad60: string[];
     britishZAll: string[];
     canadian10: string[];
     canadian20: string[];
@@ -23,6 +24,7 @@ declare const _default: {
     canadian50: string[];
     canadian55: string[];
     canadian60: string[];
+    canadianBad60: string[];
     canadianAll: string[];
     british10: string[];
     british20: string[];
@@ -32,6 +34,7 @@ declare const _default: {
     british50: string[];
     british55: string[];
     british60: string[];
+    britishBad60: string[];
     britishAll: string[];
     australian10: string[];
     australian20: string[];
@@ -41,6 +44,7 @@ declare const _default: {
     australian50: string[];
     australian55: string[];
     australian60: string[];
+    australianBad60: string[];
     australianAll: string[];
     american10: string[];
     american20: string[];
@@ -51,6 +55,7 @@ declare const _default: {
     american50: string[];
     american55: string[];
     american60: string[];
+    americanBad60: string[];
     americanAll: string[];
     english10: string[];
     englishBad10: string[];

@@ -7,4 +7,5 @@ export declare const americanBad40: string[];
 export declare const american50: string[];
 export declare const american55: string[];
 export declare const american60: string[];
+export declare const americanBad60: string[];
 export declare const americanAll: string[];

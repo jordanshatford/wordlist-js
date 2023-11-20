@@ -7,4 +7,5 @@ export declare const canadian40: string[];
 export declare const canadian50: string[];
 export declare const canadian55: string[];
 export declare const canadian60: string[];
+export declare const canadianBad60: string[];
 export declare const canadianAll: string[];

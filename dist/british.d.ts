@@ -6,4 +6,5 @@ export declare const british40: string[];
 export declare const british50: string[];
 export declare const british55: string[];
 export declare const british60: string[];
+export declare const britishBad60: string[];
 export declare const britishAll: string[];
