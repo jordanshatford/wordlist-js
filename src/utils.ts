@@ -1,10 +1,7 @@
-const badWordPlaceHolderLetter = '*';
-
 export function filterBadWords(words: string[], badWordsIN: string[]) {
   const badwords: string[] = [];
   const filteredWords = words.filter((w) => {
-    const cleaned = clean(w, badWordsIN);
-    const bad = cleaned.split('').every((l) => l === badWordPlaceHolderLetter);
+    const bad = isProfane(w, badWordsIN);
     if (bad) {
       badwords.push(w);
     }
@@ -24,18 +21,4 @@ export function processWordsFileContent(content: string[], badwordsIn: string[])
 
 function isProfane(string: string, badwordIN: string[]): boolean {
   return badwordIN.some((w) => w.toLowerCase() === string.toLowerCase());
-}
-
-function replaceWord(string: string) {
-  return string.replace(/[^a-zA-Z0-9|$|@]|\^/g, '').replace(/\w/g, badWordPlaceHolderLetter);
-}
-
-function clean(string: string, badwordIN: string[]): string {
-  const splitRegex = /\b/;
-  return string
-    .split(splitRegex)
-    .map((word) => {
-      return isProfane(word, badwordIN) ? replaceWord(word) : word;
-    })
-    .join(splitRegex.exec(string)?.[0]);
 }
