@@ -1,11 +1,5 @@
 const badWordPlaceHolderLetter = '*';
 
-export function snakeToCamel(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/([-_][a-z])/g, (group) => group.toUpperCase().replace('-', '').replace('_', ''));
-}
-
 export function filterBadWords(words: string[], badWordsIN: string[]) {
   const badwords: string[] = [];
   const filteredWords = words.filter((w) => {
@@ -19,9 +13,8 @@ export function filterBadWords(words: string[], badWordsIN: string[]) {
   return [filteredWords, badwords];
 }
 
-export function processWordsFileContent(content: string, badwordsIn: string[]) {
-  const splitWordsList = content.trim().split('\r\n');
-  const wordsWithoutPossesives = splitWordsList.filter((word) => {
+export function processWordsFileContent(content: string[], badwordsIn: string[]) {
+  const wordsWithoutPossesives = content.filter((word) => {
     return !/'s$/.test(word);
   });
   const sortedFileWords = wordsWithoutPossesives.sort();

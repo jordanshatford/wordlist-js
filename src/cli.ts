@@ -5,7 +5,7 @@ import { generate } from './generator';
 const args = yargs
   .options('source', {
     alias: 's',
-    default: 'src/assets/',
+    default: 'words/',
     type: 'string',
     description: 'path to directory which contains file from scowl final',
   })
@@ -17,11 +17,11 @@ const args = yargs
   })
   .options('dialects', {
     alias: 'd',
-    default: ['english', 'american', 'australian', 'british', 'canadian', 'british_z'],
+    default: ['english', 'american', 'australian', 'british', 'canadian', 'britishZ'],
     type: 'string',
     array: true,
     description:
-      'dialects to include when generating (english, american, australian, british, canadian, british_z)',
+      'dialects to include when generating (english, american, australian, british, canadian, britishZ)',
   })
   .options('frequencies', {
     alias: 'f',

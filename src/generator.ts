@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as Mustache from 'mustache';
-import { processWordsFileContent, snakeToCamel } from './utils';
+import { processWordsFileContent } from './utils';
 
 interface IGenerateOptions {
   sourceDir: string;
@@ -29,27 +29,28 @@ export function generate(options: IGenerateOptions) {
     if (err) throw err;
   });
 
-  const badWords = fs.readFileSync(path.join(sourceDirPath, 'bad-words.json'), 'utf-8');
-  const words = JSON.parse(badWords);
-  const splitBadwords: string[] = words;
+  const filteredWords = fs.readFileSync(path.join(sourceDirPath, 'filtered.json'), 'utf-8');
+  const splitFilteredWords: string[] = JSON.parse(filteredWords);
 
   process.stdout.write('Generating each dialects words...\n');
   dialects.forEach((dialect) => {
     process.stdout.write(`  ${dialect}... `);
+    const scowlFileName = `${dialect}.json`;
+    const scowlFileContent = fs.readFileSync(path.join(sourceDirPath, scowlFileName), 'utf-8');
+    const scowlJson: Record<string, string[]> = JSON.parse(scowlFileContent);
     const dialectFrequencies: Array<{ name: string; words: string[]; isNotBad: boolean }> = [];
     frequencies.forEach((frequency) => {
       process.stdout.write(` ${frequency}..`);
-      const scowlFileName = `${dialect}-words.${frequency}`;
-      const scowlFileContent = fs.readFileSync(path.join(sourceDirPath, scowlFileName), 'latin1');
-      const [filteredWords, badwords] = processWordsFileContent(scowlFileContent, splitBadwords);
+      const content = scowlJson[frequency];
+      const [filteredWords, badwords] = processWordsFileContent(content, splitFilteredWords);
       dialectFrequencies.push({
-        name: `${snakeToCamel(dialect)}${frequency}`,
+        name: `${dialect}${frequency}`,
         words: filteredWords,
         isNotBad: true,
       });
       if (badwords.length > 0) {
         dialectFrequencies.push({
-          name: `${snakeToCamel(dialect)}Bad${frequency}`,
+          name: `${dialect}Bad${frequency}`,
           words: badwords,
           isNotBad: false,
         });
@@ -58,21 +59,21 @@ export function generate(options: IGenerateOptions) {
     process.stdout.write(' \u2713\n');
     const result = Mustache.render(wordsTemplate, {
       frequencies: dialectFrequencies,
-      dialect: snakeToCamel(dialect),
+      dialect,
     });
-    const fileName = `${snakeToCamel(dialect)}.ts`;
+    const fileName = `${dialect}.ts`;
     fs.writeFileSync(path.join(outputDirPath, fileName), result);
   });
   process.stdout.write('Generating dialects complete.\n');
   process.stdout.write('Generating index file...\n');
   // Generate index.ts file linking all subfiles
-  const files = dialects.map((value) => snakeToCamel(value));
+  const files = dialects.map((value) => value);
   const indexContent = Mustache.render(indexTemplate, { files: files });
   fs.writeFileSync(path.join(outputDirPath, 'index.ts'), indexContent);
   process.stdout.write('Generating README file...\n');
   // Generate README.md with list of wordslists
   const readmeData = dialects.map((dialect) => {
-    return { name: snakeToCamel(dialect), frequencies };
+    return { name: dialect, frequencies };
   });
   const readmeContent = Mustache.render(readmeTemplate, { dialects: readmeData });
   fs.writeFileSync(path.join(projectDir, 'README.md'), readmeContent);
