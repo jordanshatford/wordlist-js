@@ -7,7 +7,7 @@ interface IGenerateOptions {
   sourceDir: string;
   outputDir: string;
   dialects: string[];
-  frequencies: string[];
+  frequencies: number[];
 }
 
 const projectDir = path.join(__dirname, '..');
