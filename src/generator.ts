@@ -29,11 +29,14 @@ export function generate(options: IGenerateOptions) {
     if (err) throw err;
   });
 
-  const filteredWords = fs.readFileSync(path.join(sourceDirPath, 'filtered.json'), 'utf-8');
+  const filteredWords = fs.readFileSync(path.join(sourceDirPath, '_filtered.json'), 'utf-8');
   const splitFilteredWords: string[] = JSON.parse(filteredWords);
 
   process.stdout.write('Generating each dialects words...\n');
   dialects.forEach((dialect) => {
+    if (dialect === '__filtered') {
+      return;
+    }
     process.stdout.write(`  ${dialect}... `);
     const scowlFileName = `${dialect}.json`;
     const scowlFileContent = fs.readFileSync(path.join(sourceDirPath, scowlFileName), 'utf-8');
