@@ -23,12 +23,7 @@ export function processWordsFileContent(content: string[], badwordsIn: string[])
 }
 
 function isProfane(string: string, badwordIN: string[]): boolean {
-  return (
-    badwordIN.filter((word) => {
-      const wordExp = globRegex(word);
-      return wordExp.test(string) || word === string;
-    }).length > 0 || false
-  );
+  return badwordIN.some((w) => w.toLowerCase() === string.toLowerCase());
 }
 
 function replaceWord(string: string) {
@@ -43,33 +38,4 @@ function clean(string: string, badwordIN: string[]): string {
       return isProfane(word, badwordIN) ? replaceWord(word) : word;
     })
     .join(splitRegex.exec(string)?.[0]);
-}
-
-const dotRE = /\./g;
-const dotPattern = '\\.';
-
-const restRE = /\*\*$/g;
-const restPattern = '(.+)';
-
-const globRE = /(?:\*\*\/|\*\*|\*)/g;
-const globPatterns: Record<string, string> = {
-  '*': '([^/]*)', // no backslashes
-  '**': '(.+/)?([^/]+)', // short for "**/*"
-  '**/': '(.+/)?', // one or more directories
-};
-
-function mapToPattern(str: string): string {
-  return globPatterns[str];
-}
-
-function replace(glob: string): string {
-  return glob.replace(dotRE, dotPattern).replace(restRE, restPattern).replace(globRE, mapToPattern);
-}
-
-// function join(globs: string[]) {
-//   return '((' + globs.map(replace).join(')|(') + '))';
-// }
-
-function globRegex(glob: string) {
-  return new RegExp('^' + replace(glob) + '$');
 }
