@@ -1,5 +1,11 @@
 # wordlist-js
 
+## 1.7.1
+
+### Patch Changes
+
+- fix: properly export from each dialect causing breaking change ([`8152abf`](https://github.com/jordanshatford/wordlist-js/commit/8152abfeb896ff815c7daa7f0b943b3a4649f321))
+
 ## 1.7.0
 
 ### Minor Changes
