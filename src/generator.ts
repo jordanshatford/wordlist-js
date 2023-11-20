@@ -29,6 +29,10 @@ export function generate(options: IGenerateOptions) {
     if (err) throw err;
   });
 
+  const badWords = fs.readFileSync(path.join(sourceDirPath, 'bad-words.json'), 'utf-8');
+  const words = JSON.parse(badWords);
+  const splitBadwords: string[] = words;
+
   process.stdout.write('Generating each dialects words...\n');
   dialects.forEach((dialect) => {
     process.stdout.write(`  ${dialect}... `);
@@ -37,7 +41,7 @@ export function generate(options: IGenerateOptions) {
       process.stdout.write(` ${frequency}..`);
       const scowlFileName = `${dialect}-words.${frequency}`;
       const scowlFileContent = fs.readFileSync(path.join(sourceDirPath, scowlFileName), 'latin1');
-      const [filteredWords, badwords] = processWordsFileContent(scowlFileContent);
+      const [filteredWords, badwords] = processWordsFileContent(scowlFileContent, splitBadwords);
       dialectFrequencies.push({
         name: `${snakeToCamel(dialect)}${frequency}`,
         words: filteredWords,

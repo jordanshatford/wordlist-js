@@ -20,9 +20,6 @@ devDependencies:
   '@svitejs/changesets-changelog-github-compact':
     specifier: ^1.1.0
     version: 1.1.0
-  '@types/bad-words':
-    specifier: ^3.0.3
-    version: 3.0.3
   '@types/mustache':
     specifier: ^4.2.5
     version: 4.2.5
@@ -38,9 +35,6 @@ devDependencies:
   '@typescript-eslint/parser':
     specifier: ^6.11.0
     version: 6.11.0(eslint@8.54.0)(typescript@5.2.2)
-  bad-words:
-    specifier: ^3.0.4
-    version: 3.0.4
   eslint:
     specifier: ^8.54.0
     version: 8.54.0
@@ -655,10 +649,6 @@ packages:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: true
 
-  /@types/bad-words@3.0.3:
-    resolution: {integrity: sha512-jYdpTxDOJ+EENnsCwt8cOZhV/+4+qcwhks1igrOSg4zwwA17rsPqLsZpTo1l+OwViNu+5SPus0v5g7iGx+ofzA==}
-    dev: true
-
   /@types/is-ci@3.0.4:
     resolution: {integrity: sha512-AkCYCmwlXeuH89DagDCzvCAyltI2v9lh3U3DqSg/GrBYoReAaWwxfXCqMx9UV5MajLZ4ZFwZzV4cABGIxk2XRw==}
     dependencies:
@@ -976,17 +966,6 @@ packages:
   /available-typed-arrays@1.0.5:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
-    dev: true
-
-  /bad-words@3.0.4:
-    resolution: {integrity: sha512-v/Q9uRPH4+yzDVLL4vR1+S9KoFgOEUl5s4axd6NIAq8SV2mradgi4E8lma/Y0cw1ltVdvyegCQQKffCPRCp8fg==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      badwords-list: 1.0.0
-    dev: true
-
-  /badwords-list@1.0.0:
-    resolution: {integrity: sha512-oWhaSG67e+HQj3OGHQt2ucP+vAPm1wTbdp2aDHeuh4xlGXBdWwzZ//pfu6swf5gZ8iX0b7JgmSo8BhgybbqszA==}
     dev: true
 
   /balanced-match@1.0.2:
