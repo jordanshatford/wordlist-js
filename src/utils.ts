@@ -1,24 +1,28 @@
-export function filterBadWords(words: string[], badWordsIN: string[]) {
-  const badwords: string[] = [];
-  const filteredWords = words.filter((w) => {
-    const bad = isProfane(w, badWordsIN);
-    if (bad) {
-      badwords.push(w);
+/**
+ * Filter words from a list and return two lists one of filtered words and one of words filtered out.
+ * @param words - the list of words.
+ * @param filtered - the list of words to filter.
+ * @returns [FilteredWords, WordsRemoved]
+ */
+export function filterWords(words: string[], toFilter: string[]): string[][] {
+  const filteredOut: string[] = [];
+  const filteredWords = words.filter((word) => {
+    const shouldFilter = toFilter.some((w) => w.toLowerCase() === word.toLowerCase());
+    if (shouldFilter) {
+      filteredOut.push(word);
     }
-    return !bad;
+    return !shouldFilter;
   });
-  return [filteredWords, badwords];
+  return [filteredWords, filteredOut];
 }
 
-export function processWordsFileContent(content: string[], badwordsIn: string[]) {
-  const wordsWithoutPossesives = content.filter((word) => {
-    return !/'s$/.test(word);
-  });
-  const sortedFileWords = wordsWithoutPossesives.sort();
-  const [filteredWords, badwords] = filterBadWords(sortedFileWords, badwordsIn);
-  return [filteredWords, badwords];
-}
-
-function isProfane(string: string, badwordIN: string[]): boolean {
-  return badwordIN.some((w) => w.toLowerCase() === string.toLowerCase());
+/**
+ * Process a list of words.
+ * @param words - the list of words.
+ * @param toFilter - the words to filter out.
+ * @returns [FilteredWords, WordsRemoved]
+ */
+export function processWordsList(words: string[], toFilter: string[]): string[][] {
+  const sortedWords = words.sort();
+  return filterWords(sortedWords, toFilter);
 }

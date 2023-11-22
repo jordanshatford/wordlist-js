@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { processWordsFileContent } from './utils';
+import { processWordsList } from './utils';
 import * as ts from 'typescript';
 
 const projectDir = path.join(__dirname, '..');
@@ -39,7 +39,7 @@ export function generate(options: {
     frequencies.forEach((frequency) => {
       process.stdout.write(` ${frequency}..`);
       const content = scowlJson[frequency];
-      const [filteredWords, badwords] = processWordsFileContent(content, splitFilteredWords);
+      const [filteredWords, badwords] = processWordsList(content, splitFilteredWords);
       dialectFrequencies.push({
         name: `${dialect}${frequency}`,
         words: filteredWords,
