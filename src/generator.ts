@@ -32,13 +32,13 @@ export function generate(options: {
       return;
     }
     process.stdout.write(`  ${dialect}... `);
-    const scowlFileName = `${dialect}.json`;
-    const scowlFileContent = fs.readFileSync(path.join(sourceDirPath, scowlFileName), 'utf-8');
-    const scowlJson: Record<string, string[]> = JSON.parse(scowlFileContent);
+    const filename = `${dialect}.json`;
+    const fileContent = fs.readFileSync(path.join(sourceDirPath, filename), 'utf-8');
+    const fileJSON: Record<string, string[]> = JSON.parse(fileContent);
     const dialectFrequencies: Array<{ name: string; words: string[]; isNotBad: boolean }> = [];
     frequencies.forEach((frequency) => {
       process.stdout.write(` ${frequency}..`);
-      const content = scowlJson[frequency];
+      const content = fileJSON[frequency];
       const [filteredWords, badwords] = processWordsList(content, splitFilteredWords);
       dialectFrequencies.push({
         name: `${dialect}${frequency}`,
