@@ -1,9 +1,0 @@
-{{ #files }}
-import * as {{{ . }}} from "./{{{ . }}}"
-export * from "./{{{ . }}}"
-{{ /files }}
-export default {
-{{ #files }}
-  ...{{{ . }}},
-{{ /files }}
-}

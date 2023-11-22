@@ -1,29 +1,23 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as Mustache from 'mustache';
 import { processWordsFileContent } from './utils';
-
-interface IGenerateOptions {
-  sourceDir: string;
-  outputDir: string;
-  dialects: string[];
-  frequencies: number[];
-}
+import * as ts from 'typescript';
 
 const projectDir = path.join(__dirname, '..');
-const templatePath = path.join(projectDir, 'src', 'templates');
-const wordsTemplate = fs.readFileSync(path.join(templatePath, 'words.mustache'), 'utf-8');
-const indexTemplate = fs.readFileSync(path.join(templatePath, 'index.mustache'), 'utf-8');
-const readmeTemplate = fs.readFileSync(path.join(templatePath, 'readme.mustache'), 'utf-8');
 
-export function generate(options: IGenerateOptions) {
+export function generate(options: {
+  source: string;
+  output: string;
+  dialects: string[];
+  frequencies: number[];
+}) {
   process.stdout.write('Generating words with options:\n');
   process.stdout.write('--------------------------------------------------\n');
   process.stdout.write(`${JSON.stringify(options, null, 2)}\n`);
   process.stdout.write('--------------------------------------------------\n');
-  const { sourceDir, outputDir, dialects, frequencies } = options;
-  const outputDirPath = path.join(projectDir, outputDir);
-  const sourceDirPath = path.join(projectDir, sourceDir);
+  const { source, output, dialects, frequencies } = options;
+  const outputDirPath = path.join(projectDir, output);
+  const sourceDirPath = path.join(projectDir, source);
 
   fs.mkdir(outputDirPath, { recursive: true }, (err) => {
     if (err) throw err;
@@ -60,25 +54,126 @@ export function generate(options: IGenerateOptions) {
       }
     });
     process.stdout.write(' \u2713\n');
-    const result = Mustache.render(wordsTemplate, {
-      frequencies: dialectFrequencies,
-      dialect,
-    });
-    const fileName = `${dialect}.ts`;
-    fs.writeFileSync(path.join(outputDirPath, fileName), result);
+    createDialectFile(dialect, dialectFrequencies, outputDirPath);
   });
   process.stdout.write('Generating dialects complete.\n');
   process.stdout.write('Generating index file...\n');
   // Generate index.ts file linking all subfiles
   const files = dialects.map((value) => value);
-  const indexContent = Mustache.render(indexTemplate, { files: files });
-  fs.writeFileSync(path.join(outputDirPath, 'index.ts'), indexContent);
-  process.stdout.write('Generating README file...\n');
-  // Generate README.md with list of wordslists
-  const readmeData = dialects.map((dialect) => {
-    return { name: dialect, frequencies };
-  });
-  const readmeContent = Mustache.render(readmeTemplate, { dialects: readmeData });
-  fs.writeFileSync(path.join(projectDir, 'README.md'), readmeContent);
+  createIndexFile(files, outputDirPath);
   process.stdout.write('Generating complete.\n');
+}
+
+/**
+ * Create file for a specific dialect.
+ * @param dialect - the dialect.
+ * @param frequencies - the frequencies for that dialect.
+ * @param outDir - the directory to output the file to.
+ */
+function createDialectFile(
+  dialect: string,
+  frequencies: { name: string; words: string[]; isNotBad: boolean }[],
+  outDir: string
+) {
+  const statementArray: ts.Statement[] = [];
+  // Add array for each frequency.
+  for (const f of frequencies) {
+    const frequencyArray = ts.factory.createVariableStatement(
+      ts.factory.createModifiersFromModifierFlags(ts.ModifierFlags.Export),
+      ts.factory.createVariableDeclarationList(
+        [
+          ts.factory.createVariableDeclaration(
+            f.name,
+            undefined,
+            ts.factory.createArrayTypeNode(
+              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+            ),
+            ts.factory.createArrayLiteralExpression(
+              f.words.map((w) => ts.factory.createStringLiteral(w)),
+              false
+            )
+          ),
+        ],
+        ts.NodeFlags.Const
+      )
+    );
+    statementArray.push(frequencyArray);
+  }
+  // Add array for all (filtered words) of the dialect.
+  const all = ts.factory.createVariableStatement(
+    ts.factory.createModifiersFromModifierFlags(ts.ModifierFlags.Export),
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          `${dialect}All`,
+          undefined,
+          ts.factory.createArrayTypeNode(ts.factory.createTypeReferenceNode('string')),
+          ts.factory.createArrayLiteralExpression(
+            frequencies
+              .filter((f) => f.isNotBad)
+              .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name))),
+            false
+          )
+        ),
+      ],
+      ts.NodeFlags.Const
+    )
+  );
+  statementArray.push(all);
+  createTypeScriptFile(outDir, `${dialect}.ts`, statementArray);
+}
+
+/**
+ * Create the index file used in the dist.
+ * @param files - list of files to include.
+ * @param outDir - the directory to output the file to.
+ */
+function createIndexFile(files: string[], outDir: string) {
+  const statementArray: ts.Statement[] = [];
+  for (const f of files) {
+    const moduleSpec = ts.factory.createStringLiteral(`./${f}`);
+    // Add import declaration.
+    const importDeclaration = ts.factory.createImportDeclaration(
+      undefined,
+      ts.factory.createImportClause(
+        false,
+        undefined,
+        ts.factory.createNamespaceImport(ts.factory.createIdentifier(f))
+      ),
+      moduleSpec
+    );
+    statementArray.push(importDeclaration);
+    // Export declaration.
+    const exportDeclaration = ts.factory.createExportDeclaration(
+      undefined,
+      false,
+      undefined,
+      moduleSpec
+    );
+    statementArray.push(exportDeclaration);
+  }
+  // Creating a default export statement
+  const exportDefault = ts.factory.createExportDefault(
+    ts.factory.createObjectLiteralExpression([
+      ...files.map((f) => {
+        return ts.factory.createSpreadAssignment(ts.factory.createIdentifier(f));
+      }),
+    ])
+  );
+  statementArray.push(exportDefault);
+  createTypeScriptFile(outDir, 'index.ts', statementArray);
+}
+
+/**
+ * Create a TypeScript file on the filesystem.
+ * @param dir - Directory for the file.
+ * @param name - Name of the file.
+ * @param statements - Statements to include in the file.
+ */
+function createTypeScriptFile(dir: string, name: string, statements: ts.Statement[]) {
+  const file = ts.createSourceFile(name, '', ts.ScriptTarget.ESNext);
+  const fileWithStatements = ts.factory.updateSourceFile(file, statements);
+  const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+  const code = printer.printFile(fileWithStatements);
+  fs.writeFileSync(path.join(dir, file.fileName), code);
 }

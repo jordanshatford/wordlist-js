@@ -20,9 +20,6 @@ devDependencies:
   '@svitejs/changesets-changelog-github-compact':
     specifier: ^1.1.0
     version: 1.1.0
-  '@types/mustache':
-    specifier: ^4.2.5
-    version: 4.2.5
   '@types/node':
     specifier: ^20.9.2
     version: 20.9.2
@@ -47,9 +44,6 @@ devDependencies:
   husky:
     specifier: ^8.0.3
     version: 8.0.3
-  mustache:
-    specifier: ^4.2.0
-    version: 4.2.0
   prettier:
     specifier: ^3.1.0
     version: 3.1.0
@@ -655,10 +649,6 @@ packages:
 
   /@types/minimist@1.2.5:
     resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
-    dev: true
-
-  /@types/mustache@4.2.5:
-    resolution: {integrity: sha512-PLwiVvTBg59tGFL/8VpcGvqOu3L4OuveNvPi0EYbWchRdEVP++yRUXJPFl+CApKEq13017/4Nf7aQ5lTtHUNsA==}
     dev: true
 
   /@types/node@12.20.55:
@@ -2552,11 +2542,6 @@ packages:
 
   /ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
-    dev: true
-
-  /mustache@4.2.0:
-    resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
-    hasBin: true
     dev: true
 
   /natural-compare@1.4.0:
