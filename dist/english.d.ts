@@ -13,3 +13,4 @@ export declare const englishBad55: string[];
 export declare const english60: string[];
 export declare const englishBad60: string[];
 export declare const englishAll: string[];
+export declare const englishBadAll: string[];

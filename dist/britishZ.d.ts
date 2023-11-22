@@ -8,3 +8,4 @@ export declare const britishZ55: string[];
 export declare const britishZ60: string[];
 export declare const britishZBad60: string[];
 export declare const britishZAll: string[];
+export declare const britishZBadAll: string[];

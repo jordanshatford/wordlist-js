@@ -107,7 +107,9 @@ function createDialectFile(
         ts.factory.createVariableDeclaration(
           `${dialect}All`,
           undefined,
-          ts.factory.createArrayTypeNode(ts.factory.createTypeReferenceNode('string')),
+          ts.factory.createArrayTypeNode(
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+          ),
           ts.factory.createArrayLiteralExpression(
             frequencies
               .filter((f) => f.isNotBad)
@@ -120,6 +122,28 @@ function createDialectFile(
     )
   );
   statementArray.push(all);
+  // List of all bad words
+  const allBad = ts.factory.createVariableStatement(
+    ts.factory.createModifiersFromModifierFlags(ts.ModifierFlags.Export),
+    ts.factory.createVariableDeclarationList(
+      [
+        ts.factory.createVariableDeclaration(
+          `${dialect}BadAll`,
+          undefined,
+          ts.factory.createArrayTypeNode(
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+          ),
+          ts.factory.createArrayLiteralExpression(
+            frequencies
+              .filter((f) => !f.isNotBad)
+              .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name)))
+          )
+        ),
+      ],
+      ts.NodeFlags.Const
+    )
+  );
+  statementArray.push(allBad);
   createTypeScriptFile(outDir, `${dialect}.ts`, statementArray);
 }
 

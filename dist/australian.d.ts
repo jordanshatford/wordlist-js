@@ -8,3 +8,4 @@ export declare const australian55: string[];
 export declare const australian60: string[];
 export declare const australianBad60: string[];
 export declare const australianAll: string[];
+export declare const australianBadAll: string[];

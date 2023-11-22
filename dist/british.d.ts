@@ -8,3 +8,4 @@ export declare const british55: string[];
 export declare const british60: string[];
 export declare const britishBad60: string[];
 export declare const britishAll: string[];
+export declare const britishBadAll: string[];

@@ -9,3 +9,4 @@ export declare const american55: string[];
 export declare const american60: string[];
 export declare const americanBad60: string[];
 export declare const americanAll: string[];
+export declare const americanBadAll: string[];
