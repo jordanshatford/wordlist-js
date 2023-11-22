@@ -1,7 +1,7 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
+import ts from 'typescript';
 import { processWordsList } from './utils';
-import * as ts from 'typescript';
 
 const projectDir = path.join(__dirname, '..');
 
