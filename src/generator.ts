@@ -78,73 +78,57 @@ function createDialectFile(
   const statementArray: ts.Statement[] = [];
   // Add array for each frequency.
   for (const f of frequencies) {
-    const frequencyArray = ts.factory.createVariableStatement(
-      ts.factory.createModifiersFromModifierFlags(ts.ModifierFlags.Export),
-      ts.factory.createVariableDeclarationList(
-        [
-          ts.factory.createVariableDeclaration(
-            f.name,
-            undefined,
-            ts.factory.createArrayTypeNode(
-              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-            ),
-            ts.factory.createArrayLiteralExpression(
-              f.words.map((w) => ts.factory.createStringLiteral(w)),
-              false
-            )
-          ),
-        ],
-        ts.NodeFlags.Const
-      )
+    const frequencyArray = createExportedConstStringArray(
+      f.name,
+      f.words.map((w) => ts.factory.createStringLiteral(w))
     );
     statementArray.push(frequencyArray);
   }
   // Add array for all (filtered words) of the dialect.
-  const all = ts.factory.createVariableStatement(
-    ts.factory.createModifiersFromModifierFlags(ts.ModifierFlags.Export),
-    ts.factory.createVariableDeclarationList(
-      [
-        ts.factory.createVariableDeclaration(
-          `${dialect}All`,
-          undefined,
-          ts.factory.createArrayTypeNode(
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-          ),
-          ts.factory.createArrayLiteralExpression(
-            frequencies
-              .filter((f) => f.isNotBad)
-              .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name))),
-            false
-          )
-        ),
-      ],
-      ts.NodeFlags.Const
-    )
+  const all = createExportedConstStringArray(
+    `${dialect}All`,
+    frequencies
+      .filter((f) => f.isNotBad)
+      .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name)))
   );
   statementArray.push(all);
   // List of all bad words
-  const allBad = ts.factory.createVariableStatement(
+  const allBad = createExportedConstStringArray(
+    `${dialect}BadAll`,
+    frequencies
+      .filter((f) => !f.isNotBad)
+      .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name)))
+  );
+  statementArray.push(allBad);
+  createTypeScriptFile(outDir, `${dialect}.ts`, statementArray);
+}
+
+/**
+ * Create an exported const array with provided name and elements.
+ * @param name - name of the export.
+ * @param elements - elements in the export.
+ * @returns ts.VariableStatement - the variable statement for the array.
+ */
+function createExportedConstStringArray(
+  name: string,
+  elements: ts.Expression[]
+): ts.VariableStatement {
+  return ts.factory.createVariableStatement(
     ts.factory.createModifiersFromModifierFlags(ts.ModifierFlags.Export),
     ts.factory.createVariableDeclarationList(
       [
         ts.factory.createVariableDeclaration(
-          `${dialect}BadAll`,
+          name,
           undefined,
           ts.factory.createArrayTypeNode(
             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
           ),
-          ts.factory.createArrayLiteralExpression(
-            frequencies
-              .filter((f) => !f.isNotBad)
-              .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name)))
-          )
+          ts.factory.createArrayLiteralExpression(elements)
         ),
       ],
       ts.NodeFlags.Const
     )
   );
-  statementArray.push(allBad);
-  createTypeScriptFile(outDir, `${dialect}.ts`, statementArray);
 }
 
 /**
