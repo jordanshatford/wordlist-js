@@ -3,6 +3,9 @@ import path from 'path';
 import ts from 'typescript';
 import { processWordsList } from './utils';
 
+const ALLOWED_DIALECTS = ['english', 'american', 'australian', 'british', 'canadian', 'britishZ'];
+const ALLOWED_FREQUENCIES = [10, 20, 35, 40, 50, 55, 60, 70, 80, 95];
+
 const projectDir = path.join(__dirname, '..');
 
 export function generate(options: {
@@ -28,7 +31,7 @@ export function generate(options: {
 
   process.stdout.write('Generating each dialects words...\n');
   dialects.forEach((dialect) => {
-    if (dialect === '__filtered') {
+    if (!ALLOWED_DIALECTS.includes(dialect)) {
       return;
     }
     process.stdout.write(`  ${dialect}... `);
@@ -37,18 +40,21 @@ export function generate(options: {
     const fileJSON: Record<string, string[]> = JSON.parse(fileContent);
     const dialectFrequencies: Array<{ name: string; words: string[]; isNotBad: boolean }> = [];
     frequencies.forEach((frequency) => {
+      if (!ALLOWED_FREQUENCIES.includes(frequency)) {
+        return;
+      }
       process.stdout.write(` ${frequency}..`);
-      const content = fileJSON[frequency];
-      const [filteredWords, badwords] = processWordsList(content, splitFilteredWords);
+      const words = fileJSON[frequency];
+      const [filteredWords, filteredOut] = processWordsList(words, splitFilteredWords);
       dialectFrequencies.push({
         name: `${dialect}${frequency}`,
         words: filteredWords,
         isNotBad: true,
       });
-      if (badwords.length > 0) {
+      if (filteredOut.length > 0) {
         dialectFrequencies.push({
           name: `${dialect}Bad${frequency}`,
-          words: badwords,
+          words: filteredOut,
           isNotBad: false,
         });
       }
