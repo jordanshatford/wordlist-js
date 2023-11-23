@@ -1,5 +1,17 @@
 # wordlist-js
 
+## 1.8.0
+
+### Minor Changes
+
+- feat: add helper function for generating array of elements export ([`56dd8fd`](https://github.com/jordanshatford/wordlist-js/commit/56dd8fd4be0bee567baf006d167e3f168cf40501))
+
+- feat: generate list of all bad words for each dialect ([`293544c`](https://github.com/jordanshatford/wordlist-js/commit/293544c00380146be644003fe5c692a966064ee4))
+
+- feat: use typescript compiler api to generate dist code ([`9d96a90`](https://github.com/jordanshatford/wordlist-js/commit/9d96a900c1a6f8721bd311abdff20cda7562a59f))
+
+- feat: simplify words list processing ([`27c7923`](https://github.com/jordanshatford/wordlist-js/commit/27c7923f6501fab6a1623da1f7c4881075be7544))
+
 ## 1.7.1
 
 ### Patch Changes
