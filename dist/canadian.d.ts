@@ -1,12 +1,12 @@
 export declare const canadian10: string[];
 export declare const canadian20: string[];
-export declare const canadianBad20: string[];
+export declare const canadian20FilteredOut: string[];
 export declare const canadian35: string[];
-export declare const canadianBad35: string[];
+export declare const canadian35FilteredOut: string[];
 export declare const canadian40: string[];
 export declare const canadian50: string[];
 export declare const canadian55: string[];
 export declare const canadian60: string[];
-export declare const canadianBad60: string[];
+export declare const canadian60FilteredOut: string[];
 export declare const canadianAll: string[];
-export declare const canadianBadAll: string[];
+export declare const canadianAllFilteredOut: string[];

@@ -1,11 +1,11 @@
 export declare const britishZ10: string[];
 export declare const britishZ20: string[];
-export declare const britishZBad20: string[];
+export declare const britishZ20FilteredOut: string[];
 export declare const britishZ35: string[];
 export declare const britishZ40: string[];
 export declare const britishZ50: string[];
 export declare const britishZ55: string[];
 export declare const britishZ60: string[];
-export declare const britishZBad60: string[];
+export declare const britishZ60FilteredOut: string[];
 export declare const britishZAll: string[];
-export declare const britishZBadAll: string[];
+export declare const britishZAllFilteredOut: string[];

@@ -6,6 +6,9 @@ import { processWordsList } from './utils';
 const ALLOWED_DIALECTS = ['english', 'american', 'australian', 'british', 'canadian', 'britishZ'];
 const ALLOWED_FREQUENCIES = [10, 20, 35, 40, 50, 55, 60, 70, 80, 95];
 
+const FILTERED_SUFFIX = '';
+const FILTERED_OUT_SUFFIX = 'FilteredOut';
+
 const projectDir = path.join(__dirname, '..');
 
 export function generate(options: {
@@ -38,7 +41,7 @@ export function generate(options: {
     const filename = `${dialect}.json`;
     const fileContent = fs.readFileSync(path.join(sourceDirPath, filename), 'utf-8');
     const fileJSON: Record<string, string[]> = JSON.parse(fileContent);
-    const dialectFrequencies: Array<{ name: string; words: string[]; isNotBad: boolean }> = [];
+    const dialectFrequencies: Array<{ name: string; words: string[]; isFiltered: boolean }> = [];
     frequencies.forEach((frequency) => {
       if (!ALLOWED_FREQUENCIES.includes(frequency)) {
         return;
@@ -47,15 +50,15 @@ export function generate(options: {
       const words = fileJSON[frequency];
       const [filteredWords, filteredOut] = processWordsList(words, splitFilteredWords);
       dialectFrequencies.push({
-        name: `${dialect}${frequency}`,
+        name: `${dialect}${frequency}${FILTERED_SUFFIX}`,
         words: filteredWords,
-        isNotBad: true,
+        isFiltered: true,
       });
       if (filteredOut.length > 0) {
         dialectFrequencies.push({
-          name: `${dialect}Bad${frequency}`,
+          name: `${dialect}${frequency}${FILTERED_OUT_SUFFIX}`,
           words: filteredOut,
-          isNotBad: false,
+          isFiltered: false,
         });
       }
     });
@@ -78,7 +81,7 @@ export function generate(options: {
  */
 function createDialectFile(
   dialect: string,
-  frequencies: { name: string; words: string[]; isNotBad: boolean }[],
+  frequencies: { name: string; words: string[]; isFiltered: boolean }[],
   outDir: string
 ) {
   const statementArray: ts.Statement[] = [];
@@ -92,20 +95,20 @@ function createDialectFile(
   }
   // Add array for all (filtered words) of the dialect.
   const all = createExportedConstStringArray(
-    `${dialect}All`,
+    `${dialect}All${FILTERED_SUFFIX}`,
     frequencies
-      .filter((f) => f.isNotBad)
+      .filter((f) => f.isFiltered)
       .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name)))
   );
   statementArray.push(all);
-  // List of all bad words
-  const allBad = createExportedConstStringArray(
-    `${dialect}BadAll`,
+  // List of all filtered out words
+  const allFilteredOut = createExportedConstStringArray(
+    `${dialect}All${FILTERED_OUT_SUFFIX}`,
     frequencies
-      .filter((f) => !f.isNotBad)
+      .filter((f) => !f.isFiltered)
       .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name)))
   );
-  statementArray.push(allBad);
+  statementArray.push(allFilteredOut);
   createTypeScriptFile(outDir, `${dialect}.ts`, statementArray);
 }
 

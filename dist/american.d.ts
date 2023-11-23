@@ -1,12 +1,12 @@
 export declare const american10: string[];
 export declare const american20: string[];
 export declare const american35: string[];
-export declare const americanBad35: string[];
+export declare const american35FilteredOut: string[];
 export declare const american40: string[];
-export declare const americanBad40: string[];
+export declare const american40FilteredOut: string[];
 export declare const american50: string[];
 export declare const american55: string[];
 export declare const american60: string[];
-export declare const americanBad60: string[];
+export declare const american60FilteredOut: string[];
 export declare const americanAll: string[];
-export declare const americanBadAll: string[];
+export declare const americanAllFilteredOut: string[];
