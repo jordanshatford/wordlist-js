@@ -8,6 +8,7 @@ const ALLOWED_FREQUENCIES = [10, 20, 35, 40, 50, 55, 60, 70, 80, 95];
 
 const FILTERED_SUFFIX = '';
 const FILTERED_OUT_SUFFIX = 'FilteredOut';
+// const UNFILTERED_SUFFIX = 'Unfiltered';
 
 const projectDir = path.join(__dirname, '..');
 
@@ -41,7 +42,8 @@ export function generate(options: {
     const filename = `${dialect}.json`;
     const fileContent = fs.readFileSync(path.join(sourceDirPath, filename), 'utf-8');
     const fileJSON: Record<string, string[]> = JSON.parse(fileContent);
-    const dialectFrequencies: Array<{ name: string; words: string[]; isFiltered: boolean }> = [];
+    const dialectFrequencies: Array<{ name: string; filtered: string[]; filteredOut: string[] }> =
+      [];
     frequencies.forEach((frequency) => {
       if (!ALLOWED_FREQUENCIES.includes(frequency)) {
         return;
@@ -50,17 +52,10 @@ export function generate(options: {
       const words = fileJSON[frequency];
       const [filteredWords, filteredOut] = processWordsList(words, splitFilteredWords);
       dialectFrequencies.push({
-        name: `${dialect}${frequency}${FILTERED_SUFFIX}`,
-        words: filteredWords,
-        isFiltered: true,
+        name: `${dialect}${frequency}`,
+        filtered: filteredWords,
+        filteredOut: filteredOut,
       });
-      if (filteredOut.length > 0) {
-        dialectFrequencies.push({
-          name: `${dialect}${frequency}${FILTERED_OUT_SUFFIX}`,
-          words: filteredOut,
-          isFiltered: false,
-        });
-      }
     });
     process.stdout.write(' \u2713\n');
     createDialectFile(dialect, dialectFrequencies, outputDirPath);
@@ -81,23 +76,30 @@ export function generate(options: {
  */
 function createDialectFile(
   dialect: string,
-  frequencies: { name: string; words: string[]; isFiltered: boolean }[],
+  frequencies: { name: string; filtered: string[]; filteredOut: string[] }[],
   outDir: string
 ) {
   const statementArray: ts.Statement[] = [];
   // Add array for each frequency.
   for (const f of frequencies) {
     const frequencyArray = createExportedConstStringArray(
-      f.name,
-      f.words.map((w) => ts.factory.createStringLiteral(w))
+      `${f.name}${FILTERED_SUFFIX}`,
+      f.filtered.map((w) => ts.factory.createStringLiteral(w))
     );
     statementArray.push(frequencyArray);
+    if (f.filteredOut.length > 0) {
+      const frequencyArrayFilteredOut = createExportedConstStringArray(
+        `${f.name}${FILTERED_OUT_SUFFIX}`,
+        f.filteredOut.map((w) => ts.factory.createStringLiteral(w))
+      );
+      statementArray.push(frequencyArrayFilteredOut);
+    }
   }
   // Add array for all (filtered words) of the dialect.
   const all = createExportedConstStringArray(
     `${dialect}All${FILTERED_SUFFIX}`,
     frequencies
-      .filter((f) => f.isFiltered)
+      .filter((f) => f.filtered.length > 0)
       .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name)))
   );
   statementArray.push(all);
@@ -105,8 +107,12 @@ function createDialectFile(
   const allFilteredOut = createExportedConstStringArray(
     `${dialect}All${FILTERED_OUT_SUFFIX}`,
     frequencies
-      .filter((f) => !f.isFiltered)
-      .map((f) => ts.factory.createSpreadElement(ts.factory.createIdentifier(f.name)))
+      .filter((f) => f.filteredOut.length > 0)
+      .map((f) =>
+        ts.factory.createSpreadElement(
+          ts.factory.createIdentifier(`${f.name}${FILTERED_OUT_SUFFIX}`)
+        )
+      )
   );
   statementArray.push(allFilteredOut);
   createTypeScriptFile(outDir, `${dialect}.ts`, statementArray);
