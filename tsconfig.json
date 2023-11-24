@@ -1,16 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "declaration": true,
-    "outDir": "./dist/",
-    "strict": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "typeRoots": ["./node_modules/@types"],
-    "skipLibCheck": true /* Skip type checking of declaration files. */,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/generated"],
-  "exclude": ["node_modules"]
+  "extends": "./tsconfig-dev.json",
+  "include": ["src/generated"]
 }
