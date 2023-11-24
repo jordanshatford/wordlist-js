@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import ts from 'typescript';
 import config from '../wordlist.config.json';
-import utils from './utils';
 
 const ALLOWED_DIALECTS = ['english', 'american', 'australian', 'british', 'canadian', 'britishZ'];
 const ALLOWED_FREQUENCIES = [10, 20, 35, 40, 50, 55, 60, 70, 80, 95];
@@ -12,6 +11,30 @@ const FILTERED_OUT_SUFFIX = 'FilteredOut';
 const UNFILTERED_SUFFIX = 'Unfiltered';
 
 const projectDir = path.join(__dirname, '..');
+
+/**
+ * Process a list of words. Filter out specific words.
+ * @param words - the list of words.
+ * @param toFilter - the words to filter out.
+ * @returns = object containing list of filtered and filtered out words.
+ */
+export function processWordsList(
+  words: string[],
+  toFilter: string[]
+): { filtered: string[]; filteredOut: string[] } {
+  // Sort list of words.
+  const sortedWords = words.sort();
+  // Track all words filtered out.
+  const filteredOut: string[] = [];
+  const filteredWords = sortedWords.filter((word) => {
+    const shouldFilter = toFilter.some((w) => w.toLowerCase() === word.toLowerCase());
+    if (shouldFilter) {
+      filteredOut.push(word);
+    }
+    return !shouldFilter;
+  });
+  return { filtered: filteredWords, filteredOut };
+}
 
 export function generate() {
   process.stdout.write('Generating words with options:\n');
@@ -46,7 +69,7 @@ export function generate() {
       }
       process.stdout.write(` ${frequency}..`);
       const words = fileJSON[frequency];
-      const { filtered, filteredOut } = utils.processWordsList(words, splitFilteredWords);
+      const { filtered, filteredOut } = processWordsList(words, splitFilteredWords);
       dialectFrequencies.push({
         name: `${dialect}${frequency}`,
         filtered,
