@@ -3,7 +3,7 @@
 /.husky
 /dist
 node_modules
-src/generated/
+__generated__/
 
 pnpm-lock.yaml
 

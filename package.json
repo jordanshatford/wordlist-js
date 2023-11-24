@@ -15,8 +15,7 @@
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
-    "generate": "ts-node src/cli.ts",
-    "clean": "rm -rf dist/ && rm -rf src/generated/"
+    "clean": "rm -rf dist/ && rm -rf __generated__/"
   },
   "repository": {
     "type": "git",

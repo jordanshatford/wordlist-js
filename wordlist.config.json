@@ -1,6 +1,6 @@
 {
   "source": "words/",
-  "output": "src/generated",
+  "output": "__generated__/",
   "dialects": ["english", "american", "australian", "british", "canadian", "britishZ"],
   "frequencies": [10, 20, 35, 40, 50, 55, 60]
 }
