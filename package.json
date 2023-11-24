@@ -10,11 +10,12 @@
     "prepare": "husky install",
     "changeset": "changeset",
     "commitlint": "commitlint --edit",
-    "build": "pnpm run clean && ts-node scripts/generate.ts && tsc && pnpm run uglify:dist",
+    "build": "pnpm clean && pnpm generate && tsc && pnpm uglify:dist",
     "uglify:dist": "uglifyjs-folder dist -e -x .js -o dist --log-level error",
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
+    "generate": "ts-node scripts/generate.ts",
     "clean": "ts-node scripts/clean.ts"
   },
   "repository": {
