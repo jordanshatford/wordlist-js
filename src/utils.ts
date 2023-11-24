@@ -1,28 +1,27 @@
 /**
- * Filter words from a list and return two lists one of filtered words and one of words filtered out.
+ * Process a list of words. Filter out specific words.
  * @param words - the list of words.
- * @param filtered - the list of words to filter.
- * @returns [FilteredWords, WordsRemoved]
+ * @param toFilter - the words to filter out.
+ * @returns = object containing list of filtered and filtered out words.
  */
-export function filterWords(words: string[], toFilter: string[]): string[][] {
+export function processWordsList(
+  words: string[],
+  toFilter: string[]
+): { filtered: string[]; filteredOut: string[] } {
+  // Sort list of words.
+  const sortedWords = words.sort();
+  // Track all words filtered out.
   const filteredOut: string[] = [];
-  const filteredWords = words.filter((word) => {
+  const filteredWords = sortedWords.filter((word) => {
     const shouldFilter = toFilter.some((w) => w.toLowerCase() === word.toLowerCase());
     if (shouldFilter) {
       filteredOut.push(word);
     }
     return !shouldFilter;
   });
-  return [filteredWords, filteredOut];
+  return { filtered: filteredWords, filteredOut };
 }
 
-/**
- * Process a list of words.
- * @param words - the list of words.
- * @param toFilter - the words to filter out.
- * @returns [FilteredWords, WordsRemoved]
- */
-export function processWordsList(words: string[], toFilter: string[]): string[][] {
-  const sortedWords = words.sort();
-  return filterWords(sortedWords, toFilter);
-}
+export default {
+  processWordsList,
+};

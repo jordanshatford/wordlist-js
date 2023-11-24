@@ -1,6 +1,6 @@
 name: Word Filter Request
 description: Suggest a word to be filtered for the project.
-labels: ["enhancement"]
+labels: ['enhancement']
 assignees:
   - jordanshatford
 body:

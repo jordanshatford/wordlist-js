@@ -6,6 +6,3 @@ node_modules
 src/generated/
 
 pnpm-lock.yaml
-
-.eslintrc.js
-commitlint.config.ts

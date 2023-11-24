@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import ts from 'typescript';
-import { processWordsList } from './utils';
+import utils from './utils';
 
 const ALLOWED_DIALECTS = ['english', 'american', 'australian', 'british', 'canadian', 'britishZ'];
 const ALLOWED_FREQUENCIES = [10, 20, 35, 40, 50, 55, 60, 70, 80, 95];
@@ -50,11 +50,11 @@ export function generate(options: {
       }
       process.stdout.write(` ${frequency}..`);
       const words = fileJSON[frequency];
-      const [filteredWords, filteredOut] = processWordsList(words, splitFilteredWords);
+      const { filtered, filteredOut } = utils.processWordsList(words, splitFilteredWords);
       dialectFrequencies.push({
         name: `${dialect}${frequency}`,
-        filtered: filteredWords,
-        filteredOut: filteredOut,
+        filtered,
+        filteredOut,
       });
     });
     process.stdout.write(' \u2713\n');

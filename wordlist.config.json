@@ -1,21 +1,6 @@
 {
   "source": "words/",
   "output": "src/generated",
-  "dialects": [
-    "english",
-    "american",
-    "australian",
-    "british",
-    "canadian",
-    "britishZ"
-  ],
-  "frequencies": [
-    10,
-    20,
-    35,
-    40,
-    50,
-    55,
-    60
-  ]
+  "dialects": ["english", "american", "australian", "british", "canadian", "britishZ"],
+  "frequencies": [10, 20, 35, 40, 50, 55, 60]
 }

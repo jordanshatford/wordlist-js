@@ -12,7 +12,7 @@ updates:
     groups:
       github-actions:
         patterns:
-          - "*"
+          - '*'
 
   - package-ecosystem: 'npm'
     directory: '/'
@@ -22,6 +22,6 @@ updates:
       - 'jordanshatford'
     groups:
       prod-npm:
-        dependency-type: "production"
+        dependency-type: 'production'
       dev-npm:
-        dependency-type: "development"
+        dependency-type: 'development'

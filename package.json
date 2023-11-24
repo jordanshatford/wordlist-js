@@ -12,8 +12,8 @@
     "commitlint": "commitlint --edit",
     "build": "pnpm run clean && pnpm run generate && tsc && pnpm run uglify:dist",
     "uglify:dist": "uglifyjs-folder dist -e -x .js -o dist --log-level error",
-    "lint": "prettier --check ./src/ && eslint ./src/",
-    "format": "prettier --write ./src/",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "generate": "ts-node src/cli.ts",
     "clean": "rm -rf dist/ && rm -rf src/generated/"

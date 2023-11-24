@@ -1,6 +1,6 @@
 name: Word Request
 description: Suggest a new word for the project.
-labels: ["enhancement"]
+labels: ['enhancement']
 assignees:
   - jordanshatford
 body:

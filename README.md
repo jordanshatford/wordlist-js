@@ -31,9 +31,11 @@
 wordlist-js provides lists of English words based on how common they are used. It also provides words for many English dialects.
 
 ## Available Words Lists
+
 See the project [config](./wordlist.config.json) for information on dialects and frequencies generated. Alternatively see the [dist](./dist/) folder for type declaration files.
 
 ## SCOWL
+
 This project and words lists are based on [SCOWL](http://wordlist.aspell.net/).
 
 When manually combining the words lists the "english" spelling category should be used as well as one of "american", "british", "britishZ" (british with ize spelling), "canadian" or "australian".

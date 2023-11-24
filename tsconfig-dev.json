@@ -7,12 +7,10 @@
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "typeRoots": [
-        "./node_modules/@types"
-    ],
-    "skipLibCheck": true,                           /* Skip type checking of declaration files. */
+    "typeRoots": ["./node_modules/@types"],
+    "skipLibCheck": true /* Skip type checking of declaration files. */,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "scripts/**/*"],
   "exclude": ["node_modules"]
 }
