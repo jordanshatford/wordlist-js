@@ -41,9 +41,8 @@ export function generate() {
   process.stdout.write('--------------------------------------------------\n');
   process.stdout.write(`${JSON.stringify(config, null, 2)}\n`);
   process.stdout.write('--------------------------------------------------\n');
-  const { source, output, dialects, frequencies } = config;
-  const outputDirPath = path.join(projectDir, output);
-  const sourceDirPath = path.join(projectDir, source);
+  const outputDirPath = path.join(projectDir, config.output);
+  const sourceDirPath = path.join(projectDir, config.source);
 
   fs.mkdir(outputDirPath, { recursive: true }, (err) => {
     if (err) throw err;
@@ -53,7 +52,7 @@ export function generate() {
   const splitFilteredWords: string[] = JSON.parse(filteredWords);
 
   process.stdout.write('Generating each dialects words...\n');
-  dialects.forEach((dialect) => {
+  config.dialects.forEach((dialect) => {
     if (!ALLOWED_DIALECTS.includes(dialect)) {
       return;
     }
@@ -63,7 +62,7 @@ export function generate() {
     const fileJSON: Record<string, string[]> = JSON.parse(fileContent);
     const dialectFrequencies: Array<{ name: string; filtered: string[]; filteredOut: string[] }> =
       [];
-    frequencies.forEach((frequency) => {
+    config.frequencies.forEach((frequency) => {
       if (!ALLOWED_FREQUENCIES.includes(frequency)) {
         return;
       }
@@ -82,8 +81,7 @@ export function generate() {
   process.stdout.write('Generating dialects complete.\n');
   process.stdout.write('Generating index file...\n');
   // Generate index.ts file linking all subfiles
-  const files = dialects.map((value) => value);
-  createIndexFile(files, outputDirPath);
+  createIndexFile(config.dialects, outputDirPath);
   process.stdout.write('Generating complete.\n');
 }
 
