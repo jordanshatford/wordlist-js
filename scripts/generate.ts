@@ -37,10 +37,6 @@ export function processWordsList(
 }
 
 export function generate() {
-  process.stdout.write('Generating words with options:\n');
-  process.stdout.write('--------------------------------------------------\n');
-  process.stdout.write(`${JSON.stringify(config, null, 2)}\n`);
-  process.stdout.write('--------------------------------------------------\n');
   const outputDirPath = path.join(projectDir, config.output);
   const sourceDirPath = path.join(projectDir, config.source);
 
@@ -51,38 +47,34 @@ export function generate() {
   const filteredWords = fs.readFileSync(path.join(sourceDirPath, '_filtered.json'), 'utf-8');
   const splitFilteredWords: string[] = JSON.parse(filteredWords);
 
-  process.stdout.write('Generating each dialects words...\n');
-  config.dialects.forEach((dialect) => {
+  // Iterate over each dialect to create a specific file for that dialect.
+  for (const dialect of config.dialects) {
+    // If the dialect isnt supported ignore and continue.
     if (!ALLOWED_DIALECTS.includes(dialect)) {
-      return;
+      continue;
     }
-    process.stdout.write(`  ${dialect}... `);
-    const filename = `${dialect}.json`;
-    const fileContent = fs.readFileSync(path.join(sourceDirPath, filename), 'utf-8');
-    const fileJSON: Record<string, string[]> = JSON.parse(fileContent);
-    const dialectFrequencies: Array<{ name: string; filtered: string[]; filteredOut: string[] }> =
-      [];
-    config.frequencies.forEach((frequency) => {
+    const content = fs.readFileSync(path.join(sourceDirPath, `${dialect}.json`), 'utf-8');
+    const json: Record<string, string[]> = JSON.parse(content);
+    const info: Array<{ name: string; filtered: string[]; filteredOut: string[] }> = [];
+    // Iterate over each frequency for the dialect and add information to be generated in file.
+    for (const frequency of config.frequencies) {
+      // If the frequency isnt supported ignore and continue.
       if (!ALLOWED_FREQUENCIES.includes(frequency)) {
-        return;
+        continue;
       }
-      process.stdout.write(` ${frequency}..`);
-      const words = fileJSON[frequency];
+      const words = json[frequency];
       const { filtered, filteredOut } = processWordsList(words, splitFilteredWords);
-      dialectFrequencies.push({
+      info.push({
         name: `${dialect}${frequency}`,
         filtered,
         filteredOut,
       });
-    });
-    process.stdout.write(' \u2713\n');
-    createDialectFile(dialect, dialectFrequencies, outputDirPath);
-  });
-  process.stdout.write('Generating dialects complete.\n');
-  process.stdout.write('Generating index file...\n');
-  // Generate index.ts file linking all subfiles
+    }
+    // Generate `dialect`.ts file for the current dialect.
+    createDialectFile(dialect, info, outputDirPath);
+  }
+  // Generate index.ts file linking all dialect files.
   createIndexFile(config.dialects, outputDirPath);
-  process.stdout.write('Generating complete.\n');
 }
 
 /**
