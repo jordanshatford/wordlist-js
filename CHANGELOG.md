@@ -1,5 +1,21 @@
 # wordlist-js
 
+## 2.0.0
+
+### Major Changes
+
+- breaking: update exports to specify filtered out lists ([`8142c376b79c153169692664df64a99532ee855e`](https://github.com/jordanshatford/wordlist-js/commit/8142c376b79c153169692664df64a99532ee855e))
+
+### Minor Changes
+
+- feat: better generation of filtered and filtered out words lists ([`07760920648bb0120ba3dc8d000f0fd3bb5b2fac`](https://github.com/jordanshatford/wordlist-js/commit/07760920648bb0120ba3dc8d000f0fd3bb5b2fac))
+
+- feat: export lists of words unfiltered ([`2e915f21cc6b98c6d4f63237d123c230fb05f9c6`](https://github.com/jordanshatford/wordlist-js/commit/2e915f21cc6b98c6d4f63237d123c230fb05f9c6))
+
+### Patch Changes
+
+- fix: better handling of invalid dialects and frequencies when generating ([`acf0f4f24c30cbb04aa4ca6117e6047ab9e2f267`](https://github.com/jordanshatford/wordlist-js/commit/acf0f4f24c30cbb04aa4ca6117e6047ab9e2f267))
+
 ## 1.8.0
 
 ### Minor Changes
