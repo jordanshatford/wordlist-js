@@ -64,7 +64,7 @@
     "typescript": "^5.3.2",
     "uglifyjs-folder": "^3.3.0"
   },
-  "packageManager": "pnpm@8.10.5+sha256.a4bd9bb7b48214bbfcd95f264bd75bb70d100e5d4b58808f5cd6ab40c6ac21c5",
+  "packageManager": "pnpm@8.15.1+sha256.245fe901f8e7fa8782d7f17d32b6a83995e2ae03984cb5b62b8949bfdc27c7b5",
   "engines": {
     "pnpm": ">=8",
     "node": ">=18"
