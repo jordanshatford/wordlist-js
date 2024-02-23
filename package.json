@@ -7,7 +7,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "changeset": "changeset",
     "commitlint": "commitlint --edit",
     "build": "pnpm clean && pnpm generate && tsc && pnpm uglify:dist",
